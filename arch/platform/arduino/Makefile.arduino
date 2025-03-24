@@ -1,0 +1,26 @@
+# Specify the Contiki-NG platform name
+PLATFORM = arduino
+
+# Define the target CPU architecture (AVR in this case)
+CPU_FAMILY = avr
+
+# Specify the Contiki-NG root directory (assumes this file is inside arch/platform/arduino/)
+CONTIKI_NG = $(realpath $(dir $(lastword $(MAKEFILE_LIST)))../../..)
+
+# Include the CPU architecture Makefile
+include $(CONTIKI_NG)/arch/cpu/avr/Makefile.avr
+
+# Add source files specific to this platform
+PLATFORM_SRC += arch/platform/arduino/contiki-conf.h
+
+# Set the default target MCU
+MCU = atmega328p
+
+# Compiler options specific to the Arduino platform
+CFLAGS += -mmcu=$(MCU) -Wall -Os
+
+# Specify the linker flags
+LDFLAGS += -mmcu=$(MCU)
+
+# Include the main Contiki-NG Makefile
+include $(CONTIKI_NG)/Makefile.include
