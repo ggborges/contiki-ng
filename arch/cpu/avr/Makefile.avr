@@ -6,3 +6,12 @@ CONTIKI_NG = $(realpath $(dir $(lastword $(MAKEFILE_LIST)))../../..)
 
 # Add CPU-specific source files
 CPU_SRC += arch/cpu/avr/contiki-conf.h
+
+# Compiler flags for the AVR architecture
+CFLAGS += -mmcu=$(MCU) -Wall - Os -ffunction-sections -fdata-sections
+
+# Linker flags to optimize memory usage
+LDFLAGS += -mmcu=$(MCU) -Wl,--gc-sections
+
+# Include the main Contiki-NG Makefile
+include $(CONTIKI_NG)/Makefile.include
